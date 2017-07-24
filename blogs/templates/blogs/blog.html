@@ -1,0 +1,27 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+    <h5><a href="{% url "core:blogs:show_all_blogs" %}">Back to all blogs.</a></h5>
+    <h2> Blog {{ object.title }}</h2>
+    <h3>Description of the {{ object.title }}: </h3>
+    <p>{{ object.description }}</p>
+    <h2>Posts of this blog:</h2>
+    {% if object.post_set.all %}
+        {% for post in object.post_set.all %}
+            <i>{{ forloop.counter }}. </i>
+            <b>
+                <a href="{% url "core:posts:show_post_by_id" pk=post.id %}">
+                    {{ post.title }}
+                </a>
+                Author: {{ post.author }}
+            </b>
+            <br/>
+        {% endfor %}
+    {% endif %}
+    <br/>
+    <h5>
+        <a href="{% url "core:posts:create_post" %}?blog_id={{ object.pk }}">
+            Create new post here.
+        </a>
+    </h5>
+{% endblock %}
